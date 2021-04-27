@@ -1,0 +1,30 @@
+{
+  "name": "tech-blog",
+  "version": "1.0.0",
+  "description": "An open-source tech-blogging site",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hagenderouen/tech-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hagenderouen/tech-blog/issues"
+  },
+  "homepage": "https://github.com/hagenderouen/tech-blog#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-session-sequelize": "^7.1.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "handlebars": "^4.7.7",
+    "sequelize": "^6.6.2"
+  }
+}
