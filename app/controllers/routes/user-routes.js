@@ -20,7 +20,7 @@ router.post('/logout', (req, res) => {
 });
 
 // Read all blog posts by user
-router.get('/:username/posts', auth, (req, res) => {
+router.get('/:username/posts', (req, res) => {
     // TODO
 });
 

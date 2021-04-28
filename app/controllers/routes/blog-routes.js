@@ -6,41 +6,47 @@ const { Post } = require('../../models');
 
 // Read all blog posts
 router.get('/', async (req, res) => {
-    // TODO
+    try {
+        const postsData = await Post.findAll();
+        const posts = postsData.map((post) => post.get({ plain: true }));
+        res.json(posts);
+    } catch (err) {
+        res.status(500).json({ error: err });
+    }
 });
 
 // Create blog post
-router.post('/submit', auth, async (req, res) => {
+router.post('/submit', async (req, res) => {
     // TODO
 });
 
 // Update blog post
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', async (req, res) => {
     // TODO
 });
 
 // Delete a post by id
-router.delete('/:id', auth, (req, res) => {
+router.delete('/:id', (req, res) => {
     TODO
 });
 
 // Read blog post by id including comments
-router.get('/comments/:id', async (req, res) => {
+router.get(':id/comments', async (req, res) => {
     // TODO
 });
 
 // Create a comment on a blog post
-router.post('/comments/:id', auth, async (req, res) => {
+router.post(':id/comments', async (req, res) => {
     // TODO
 });
 
 // Update a comment on a blog post
-router.post('/comments/:id', auth, async (req, res) => {
+router.put(':id/comments', async (req, res) => {
     // TODO
 });
 
 // Delete a comment on a blog post
-router.delete('/comments/:id', auth, async (req, res) => {
+router.delete(':id/comments', async (req, res) => {
     // TODO
 });
 
