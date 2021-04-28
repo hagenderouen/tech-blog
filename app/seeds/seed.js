@@ -21,7 +21,7 @@ const seedDatabase = async () => {
             const newPost = await Post.create(
                 {
                 ...post,
-                userId: randUserId,
+                user_id: randUserId,
                 }
             );
         };
@@ -36,8 +36,8 @@ const seedDatabase = async () => {
             await Comment.create(
                 {
                     ...comment,
-                    postId: randPostId,
-                    userId: randCommentUserId
+                    post_id: randPostId,
+                    user_id: randCommentUserId
                 }
             );
         };
