@@ -16,16 +16,16 @@ Post.init(
             allowNull: false
         },
         content: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
-        created_by: {
-            type: DataTypes.STRING,
+        user_id: {
+            type: DataTypes.INTEGER,
             references: {
                 model: 'user',
-                key: 'username'
-            }
-        }
+                key: 'id',
+            },
+        },
     },
     {
         sequelize,
