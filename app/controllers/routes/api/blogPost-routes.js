@@ -2,6 +2,8 @@ const router = require('express').Router();
 const { Post, User } = require('../../../models');
 // TODO const auth = require('../../utils/auth');
 
+const SEED_USERNAME = 'EddieHendrix'; // For demo purposes
+
 // Read all blog posts
 // /api/posts
 router.get('/', async (req, res) => {
@@ -18,10 +20,10 @@ router.get('/', async (req, res) => {
 // /api/posts/submit
 router.post('/submit', async (req, res) => {
     try {
-        req.session.username = 'EddieHendrix'; // TODO: remove this line after login route implemented
+        
         const userData = await User.findOne({ 
             where: {
-                username: req.session.username
+                username: SEED_USERNAME
             }, 
             attributes: ['id']
         });
