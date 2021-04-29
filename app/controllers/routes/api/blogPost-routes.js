@@ -16,6 +16,8 @@ router.get('/', async (req, res) => {
     }
 });
 
+// TODO: Read all blog posts by a user
+
 // Create a blog post
 // /api/posts/submit
 router.post('/submit', async (req, res) => {
