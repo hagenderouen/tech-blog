@@ -18,5 +18,10 @@
       "username": "EddieHendrix",
       "email": "eddiehendrix@slofast.com",
       "password": "cupidatat ea occaecat aliquip fugiat ut"
+    },
+    {
+      "username": "DemoUserName",
+      "email": "demousername@slofast.com",
+      "password": "Password#1"
     }
 ]

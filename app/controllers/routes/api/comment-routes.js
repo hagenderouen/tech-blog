@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Post, Comment, User } = require('../../../models');
 // TODO const auth = require('../../utils/auth');
 
-const SEED_USERNAME = 'EddieHendrix'; // For demo purposes
+const SEED_USERNAME = 'DemoUserName'; // For demo purposes
 
 // /api
 

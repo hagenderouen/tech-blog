@@ -2,21 +2,30 @@ const router = require('express').Router();
 const { Post, User } = require('../../../models');
 // TODO const auth = require('../../utils/auth');
 
-const SEED_USERNAME = 'EddieHendrix'; // For demo purposes
+const SEED_USERNAME = 'DemoUserName'; // For demo purposes
 
 // Read all blog posts
-// /api/posts
+// GET /api/posts
+// GET /api/posts?userid=1
 router.get('/', async (req, res) => {
+    let match = {};
+
+    if (req.query.userid) {
+        match = {
+            where: {
+                userId: req.query.userid
+            }
+        };
+    };
+
     try {
-        const postsData = await Post.findAll();
+        const postsData = await Post.findAll(match);
         const posts = postsData.map((post) => post.get({ plain: true }));
         res.json(posts);
     } catch (err) {
-        res.status(500).json({ error: err });
+        res.status(500).json(err);
     }
 });
-
-// TODO: Read all blog posts by a user
 
 // Create a blog post
 // /api/posts/submit
@@ -43,7 +52,7 @@ router.post('/submit', async (req, res) => {
 
         res.status(201).json(newPost);
     } catch (err) {
-        res.status(500).json({ error: err });
+        res.status(500).json(err);
     }
     
 });
