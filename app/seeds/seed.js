@@ -1,9 +1,19 @@
 const sequelize = require('../../config/connection');
 const { User, Post, Comment } = require('../models');
+const bcrypt = require('bcrypt');
 
 const userSeedData = require('./userSeedData.json');
 const postSeedData = require('./postSeedData.json');
 const commentSeedData = require('./commentSeedData.json');
+
+User.addHook('beforeBulkCreate', async (newUsers) => {
+    encryptUsers = [];
+    for (const newUser of newUsers) {
+        newUser.password = await bcrypt.hash(newUser.password, 10);
+        encryptUsers.push(newUser);
+    }
+    return encryptUsers;
+});
 
 const seedDatabase = async () => {
     try {
