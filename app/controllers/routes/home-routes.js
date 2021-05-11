@@ -8,7 +8,8 @@ router.get('/', async (req, res) => {
         console.log(posts);
         res.render('home', { 
             posts,
-            logged_in: req.session.logged_in 
+            loggedIn: req.session.loggedIn,
+            username: req.session.username
         });
     } catch (err) {
         res.status(500).send({ error: 'something blew up' });
