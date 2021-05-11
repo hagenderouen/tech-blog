@@ -24,7 +24,17 @@ const sess = {
 
 app.use(session(sess));
 
-const hbs = exphbs.create();
+const hbs = exphbs.create({
+  defaultLayout: "main",
+  extname: ".handlebars",
+  helpers: {
+    section: function(name, options) { 
+      if (!this._sections) this._sections = {};
+        this._sections[name] = options.fn(this); 
+        return null;
+      }
+  }
+});
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
