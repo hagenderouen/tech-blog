@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 const userSeedData = require('./userSeedData.json');
 const postSeedData = require('./postSeedData.json');
 const commentSeedData = require('./commentSeedData.json');
-const { post } = require('../controllers/routes/api/blogPost-routes');
 
 User.addHook('beforeBulkCreate', async (newUsers) => {
     encryptUsers = [];
@@ -40,7 +39,6 @@ const seedDatabase = async () => {
         })
         // bulk create comments
         const newCommentsData = await Comment.bulkCreate(comments);
-        console.log(newCommentsData);
 
         process.exit(0);
         

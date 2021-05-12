@@ -19,13 +19,12 @@ router.get('/', async (req, res) => {
     };
 
     try {
-        const postsData = await Post.findAll(
-            match,
-            {
-                include: [Comment]
-            }
-        );
-        console.log(postsData);
+        
+        const postsData = await Post.findAll({
+            ...match,
+            include: Comment
+        });
+        
         const posts = postsData.map((post) => post.get({ plain: true }));
         res.json(posts);
     } catch (err) {
