@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { User, Post } = require('../../../models');
-// TODO: require auth middleware
+const auth = require('../../../utils/auth');
 
 // /api/users
 
@@ -65,19 +65,15 @@ router.post('/login', async (req, res) => {
 
 // Logout a user
 // /api/users/logout
-router.post('/logout', async (req, res) => {
-    if (req.session.loggedIn) {
+router.post('/logout', auth, async (req, res) => {
         req.session.destroy(() => {
           res.status(204).end();
         });
-      } else {
-        res.status(404).end();
-      }
 });
 
 // Delete a user by id
 // /api/users/:id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
         await User.destroy({
             where: {
@@ -107,7 +103,32 @@ router.put('/:id', async (req, res) => {
     } catch (err) {
         res.status(500).json(err);
     }
-})
+});
+
+// Get user posts
+// /api/users/posts
+router.get('/posts', auth, async (req, res) => {
+
+  try {
+    const foundUser = await User.findOne({
+      where: {
+        username: req.session.username
+      }
+    });
+
+    const foundUserPostsData = await Post.findAll({
+      where: {
+        userId: foundUser.id
+      }
+    });
+
+    const foundUserPosts = foundUserPostsData.map((post) => post.get({ plain: true }));
+    res.json(foundUserPosts);
+  } catch (err) {
+    res.status(500).json({ error: err});
+  }
+
+});
 
 module.exports = router;
 
