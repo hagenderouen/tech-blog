@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const userSeedData = require('./userSeedData.json');
 const postSeedData = require('./postSeedData.json');
 const commentSeedData = require('./commentSeedData.json');
+const { post } = require('../controllers/routes/api/blogPost-routes');
 
 User.addHook('beforeBulkCreate', async (newUsers) => {
     encryptUsers = [];
@@ -20,37 +21,26 @@ const seedDatabase = async () => {
      
         await sequelize.sync({ force: true });
         // bulk create users
-        const usersData = await User.bulkCreate(userSeedData, {
-            returning: true
+        const newUsersData = await User.bulkCreate(userSeedData);
+        const newUsers = newUsersData.map((user) => user.get({ plain: true }));
+        // map posts to random users
+        const posts = postSeedData.map((post) => {
+            const randUserId = newUsers[getRandomInt(newUsers.length)].id;
+            return { ...post, userId: randUserId }
         });
-        // de-serializes user data
-        const users = usersData.map((user) => user.get({ plain: true }));
-        // bulk create posts assign user_id value to random user
-        for (const post of postSeedData) {
-            const randUserId = users[getRandomInt(users.length)].id;
-            const newPost = await Post.create(
-                {
-                ...post,
-                user_id: randUserId,
-                }
-            );
-        };
-
-        const postsData = await Post.findAll();
-        const posts = postsData.map((post) => post.get({ plain: true }));        
-        // bulk create comments, assign to random post_id and user_id of random user
-        for (const comment of commentSeedData) {
-            const randPostId = posts[getRandomInt(posts.length)].id;
-            const randCommentUserId = users[getRandomInt(users.length)].id
-            
-            await Comment.create(
-                {
-                    ...comment,
-                    post_id: randPostId,
-                    user_id: randCommentUserId
-                }
-            );
-        };
+        
+        // bulk create posts
+        const newPostsData = await Post.bulkCreate(posts);
+        const newPosts = newPostsData.map((post) => post.get({ plain: true }));
+        // map comments to random users and posts
+        const comments = commentSeedData.map((comment) => {
+            const randUserId = newUsers[getRandomInt(newUsers.length)].id;
+            const randPostId = newPosts[getRandomInt(newPosts.length)].id;
+            return { ...comment, userId: randUserId, postId: randPostId };
+        })
+        // bulk create comments
+        const newCommentsData = await Comment.bulkCreate(comments);
+        console.log(newCommentsData);
 
         process.exit(0);
         

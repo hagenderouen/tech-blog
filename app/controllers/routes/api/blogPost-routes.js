@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post, User } = require('../../../models');
+const { Post, User, Comment } = require('../../../models');
 // TODO const auth = require('../../utils/auth');
 
 const SEED_USERNAME = 'DemoUserName'; // For demo purposes
@@ -22,13 +22,15 @@ router.get('/', async (req, res) => {
         const postsData = await Post.findAll(
             match,
             {
-                include: [ { model: Comment }]
+                include: [Comment]
             }
         );
+        console.log(postsData);
         const posts = postsData.map((post) => post.get({ plain: true }));
         res.json(posts);
     } catch (err) {
-        res.status(500).json(err);
+        console.log(err);
+        res.status(500).json({error: err});
     }
 });
 

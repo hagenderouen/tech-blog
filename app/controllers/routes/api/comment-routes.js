@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const { Post, Comment, User } = require('../../../models');
-// TODO const auth = require('../../utils/auth');
-
-const SEED_USERNAME = 'DemoUserName'; // For demo purposes
+const auth = require('../../../utils/auth');
 
 // /api
 
@@ -33,12 +31,12 @@ router.get('/', async (req, res) => {
 
 // Create a comment
 // /api/comments?postId=1
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
 
         const userData = await User.findOne({ 
             where: {
-                username: SEED_USERNAME
+                username: req.session.username
             }, 
             attributes: ['id']
         });
@@ -61,9 +59,30 @@ router.post('/', async (req, res) => {
 
 // Update a comment by id
 // /api/comments/1
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     try {
-        await Comment.update(
+        // find comment
+        const foundCommentData = await Comment.findOne({
+            where: {
+                id: req.params.id
+            },
+            include: {
+                model: User
+            }
+        });
+
+        if (!foundCommentData) {
+            return res.status(404);
+        }
+
+        console.log(foundCommentData);
+        const foundComment = foundCommentData.get({ plain: true });
+        // if user matches comment owner, update comment
+        if (foundComment.user.username !== req.session.username) {
+            return res.status(401);
+        }
+
+        const newComment = await Comment.update(
             {
                 content: req.body.content
             },
@@ -73,7 +92,8 @@ router.put('/:id', async (req, res) => {
                 }
             }
         );
-        res.status(200).end();
+
+        res.status(200).json(newComment.get({ plain: true }));
     } catch (err) {
         res.status(500).json(err);
     }
