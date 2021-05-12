@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const { Post, User, Comment } = require('../../../models');
-// TODO const auth = require('../../utils/auth');
-
-const SEED_USERNAME = 'DemoUserName'; // For demo purposes
+const auth = require('../../../utils/auth');
 
 // Read all blog posts
 // GET /api/posts
@@ -23,23 +21,22 @@ router.get('/', async (req, res) => {
 });
 
 // Create a blog post
-// /api/posts/submit
-router.post('/submit', async (req, res) => {
+// /api/posts
+router.post('/', auth, async (req, res) => {
     try {
         
         const userData = await User.findOne({ 
             where: {
-                username: SEED_USERNAME
+                username: req.session.username
             }, 
             attributes: ['id']
         });
-        const user = userData.get({ plain: true });
 
         const newPost = await Post.create(
             {
                 title: req.body.title,
                 content: req.body.content,
-                userId: user.id
+                userId: userData.id
             }, 
             {
             returning: true
