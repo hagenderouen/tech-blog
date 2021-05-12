@@ -6,14 +6,24 @@ const SEED_USERNAME = 'DemoUserName'; // For demo purposes
 
 // Read all blog posts
 // GET /api/posts
-// GET /api/posts?userid=1
+// GET /api/posts?username=demoUser
 router.get('/', async (req, res) => {
     let match = {};
 
-    if (req.query.userid) {
+    if (req.query.username) {
+        const foundUser = await User.findOne({
+            where: {
+                username: req.query.username
+            }
+        });
+
+        if (!foundUser) {
+            return res.status(404);
+        }
+
         match = {
             where: {
-                userId: req.query.userid
+                userId: foundUser.id
             }
         };
     };
