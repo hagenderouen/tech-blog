@@ -1,14 +1,5 @@
 {{#if loggedIn}}
-<div class="card mb-1">
-    <div class="card-body">
-            <form class="row" action="#">
-                <div class="input-group">
-                <div class="input-group-text"><i class="bi bi-person-circle fs-2"></i></div>
-                <input class="form-control" type="text" placeholder="Create a post">
-                </div>
-            </form>
-    </div>
-</div>
+{{> post-form}}
 {{/if}}
 {{#each posts as |post|}}
 {{> post-details}}

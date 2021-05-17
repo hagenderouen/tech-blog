@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 });
 
 // Create a blog post
-// /api/posts
+// /api/posts/
 router.post('/', auth, async (req, res) => {
     try {
         
