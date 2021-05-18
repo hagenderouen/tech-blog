@@ -23,9 +23,13 @@ router.get('/posts', auth, async (req, res) => {
           });
       
         const foundUserPostsData = await Post.findAll({
-        where: {
-            userId: foundUser.id
-        }
+            order: [
+                ['createdAt', 'DESC']
+            ],
+            where: {
+                userId: foundUser.id
+            },
+            include: { model: User }
         });
 
         if (foundUserPostsData) {

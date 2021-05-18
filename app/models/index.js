@@ -13,6 +13,7 @@ Post.hasMany(Comment);
 Comment.belongsTo(Post);
 
 User.hasMany(Comment);
+Comment.belongsTo(User);
 
 User.hasMany(Post);
 Post.belongsTo(User);

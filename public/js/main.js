@@ -1,7 +1,43 @@
+const $formLogin = $("#form-login");
+const $loginInputEmail = $("#loginInputEmail");
+const $loginInputPassword = $("#loginInputPassword");
 const $logoutBtn = $("#logout");
-const $postForm = $("#post-form");
-const $inputTitle = $("#inputTitle");
-const $inputContent = $("#inputContent");
+const $loginMsg = $("#login-msg");
+const $formRegister = $("#form-register");
+const $regInputEmail = $("#registerInputEmail");
+const $regInputUsername = $("#registerInputUsername");
+const $regInputPassword = $("#registerInputPassword");
+const $regMsg = $("#register-msg");
+const $post = $(".post");
+
+$formLogin.submit(function(e) {
+    e.preventDefault();
+    const formData = {
+        email: $loginInputEmail.val(),
+        password: $loginInputPassword.val()
+    };
+    
+    fetch('/api/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+    })
+    .then((response) => {
+        if (!response.ok) {
+            response.json().then((data) => {
+                $loginMsg.text(data.error);
+            });
+        } else {
+            window.location.replace('/');
+        }
+    })
+    .catch((error) => {
+        $loginMsg.text((error));
+    });
+
+});
 
 $logoutBtn.on('click', () => {
     fetch('/api/users/logout', {
@@ -11,26 +47,37 @@ $logoutBtn.on('click', () => {
     });
 });
 
-$postForm.on('submit', (e) => {
-    console.log('Post submitted!');
+$formRegister.submit(function(e) {
     e.preventDefault();
-    const postFormData = {
-        title: $inputTitle.val(),
-        content: $inputContent.val()
-    }
+    const formData = {
+        email: $regInputEmail.val(),
+        username: $regInputUsername.val(),
+        password: $regInputPassword.val()
+    };
     
-    fetch('/api/posts', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postFormData)
-    }).then((res) => {
-        if (!res.ok) {
-            console.log(res);
-        }
-        window.location.reload();
-    }).catch(err => {
-        console.log(err);
+    fetch('/api/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
     })
-})
+    .then((response) => {
+        if (!response.ok) {
+            response.json().then((data) => {
+                $regMsg.text(data.error);
+            });
+        } else {
+            window.location.replace('/');
+        }
+    })
+    .catch((error) => {
+        $regMsg.text((error));
+    });
+
+});
+
+$post.on('click', (e) => {
+    const postId = e.currentTarget.dataset.id;
+    window.location.replace(`/post/${postId}`);
+});

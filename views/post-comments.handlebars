@@ -1,0 +1,13 @@
+{{#with post}}
+{{> post-details}}
+{{/with}}
+{{#if loggedIn}}
+{{> comment-form}}
+{{/if}}
+{{#each post.comments as |comment|}}
+{{> comment-details}}
+{{/each}}
+
+{{#section 'script'}}
+<script src="/js/comment.js"></script>
+{{/section}}

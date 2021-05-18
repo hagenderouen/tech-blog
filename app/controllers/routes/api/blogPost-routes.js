@@ -36,14 +36,15 @@ router.post('/', auth, async (req, res) => {
             {
                 title: req.body.title,
                 content: req.body.content,
-                userId: userData.id
+                user_id: userData.id
             }, 
             {
             returning: true
         });
-
+        console.log(newPost);
         res.status(201).json(newPost);
     } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
     

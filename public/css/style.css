@@ -1,3 +1,40 @@
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: lightgray;
+}
+
+input,
+textarea {
+  caret-color: white;
+  color: white !important;
+}
+
+.card {
+  border: 1px solid gray !important;
+}
+
+.card-subtitle {
+  font-size: 12px;
+}
+
+.navbar {
+  border-bottom: 1px solid gray;
+}
+
+.navbar-brand {
+  color: #39ff14 !important;
+}
+
+.post:hover {
+  cursor: pointer;
+  border: 1px solid white !important;
+}
+
 #postContent {
   height: 10em;
 }

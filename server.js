@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const routes = require('./app/controllers');
 const sequelize = require('./config/connection');
-// TODO const helpers = require('./app/utils/helpers');
+const helpers = require('./app/utils/helpers');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -27,13 +27,7 @@ app.use(session(sess));
 const hbs = exphbs.create({
   defaultLayout: "main",
   extname: ".handlebars",
-  helpers: {
-    section: function(name, options) { 
-      if (!this._sections) this._sections = {};
-        this._sections[name] = options.fn(this); 
-        return null;
-      }
-  }
+  helpers
 });
 
 app.engine('handlebars', hbs.engine);

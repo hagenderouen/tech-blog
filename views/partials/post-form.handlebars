@@ -1,18 +1,18 @@
-<div class="card mb-1">
+<div class="card mb-1 bg-dark">
     <div class="card-body">
             <form id="post-form" class="row">
                 <div class="col">
                     <div class="mb-1">
                         <div class="input-group">
                             <div class="input-group-text"><i class="bi bi-person-circle fs-2"></i></div>
-                            <input id="inputTitle" name="title" class="form-control" type="text" placeholder="Create a post">
+                            <input id="inputTitle" name="title" class="form-control bg-dark" type="text" placeholder="Create a post" required>
                         </div>
                     </div>
                     <div class="mb-1">
-                        <textarea id="inputContent" name="content" class="form-control" type="text" placeholder="Write your post body. Make it awesome."></textarea>
+                        <textarea id="inputContent" name="content" class="form-control bg-dark" type="text" placeholder="Write your post. Make it awesome." required></textarea>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-light">Submit</button>
                     </div>
                 </div>
             </form>
