@@ -1,13 +1,16 @@
 <div class="row justify-content-center">
-        <form id="form-login">
-            <h2 class="h3 mb-3 font-weight-normal">Please log in</h2>
-            <label for="loginInputEmail" class="sr-only">Email address</label>
-            <input type="email" id="loginInputEmail" class="form-control bg-dark" value="demouser@slofast.com"
-                placeholder="Email address" required autofocus>
-            <label for="loginInputPassword" class="sr-only">Password</label>
-            <input type="password" id="loginInputPassword" class="form-control bg-dark" value="Password1" placeholder="Password"
-                required>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-        </form>
-        <span id="login-msg"></span>
+    <div class="card col-6 bg-dark">
+        <div class="card-body">
+            <h2 class="card-title">Please log in</h2>
+                <form id="form-login">
+                    <input type="email" id="loginInputEmail" class="form-control bg-dark mb-1"
+                        placeholder="Email address" required autofocus>
+                    <input type="password" id="loginInputPassword" class="form-control bg-dark mb-1" placeholder="Password"
+                        required>
+                    <button class="btn btn-md btn-light btn-block mb-3" type="submit">Log in</button>
+                    <p class="card-text d-flex justify-content-center">Don't have a login? &nbsp; <a href="/user/register">Create one</a></p>
+                </form>
+                <span id="login-msg"></span>
+        </div>
+    </div>
 </div>
