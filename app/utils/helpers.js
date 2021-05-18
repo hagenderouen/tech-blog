@@ -11,5 +11,12 @@ module.exports = {
         if (!this._sections) this._sections = {};
           this._sections[name] = options.fn(this); 
           return null;
+    },
+    count: (arr) => {
+        if (arr.length === 1) {
+            return `1 comment`
+        } else {
+            return `${arr.length} comments`;
+        } 
     }
 }

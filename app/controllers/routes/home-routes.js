@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const Sequelize = require('sequelize');
 const { Post, User, Comment } = require('../../models');
 
 router.get('/', async (req, res) => {
@@ -7,7 +8,10 @@ router.get('/', async (req, res) => {
             order: [
                 ['createdAt', 'DESC']
             ],
-            include: { model: User }
+            include: [
+                { model: User },
+                { model: Comment }
+            ]
         });
         const posts = postsData.map((post) => post.get({ plain: true }));
         
@@ -17,7 +21,8 @@ router.get('/', async (req, res) => {
             username: req.session.username
         });
     } catch (err) {
-        res.status(500).send({ error: err });
+        console.log(err);
+        res.status(500).json(err);
     }
     
 });
@@ -36,7 +41,7 @@ router.get('/post/:id', async (req, res) => {
             ]
         });
         const foundPost = foundPostData.get({ plain: true });
-        console.log(foundPost);
+        
         res.render('post-comments', {
             post: foundPost,
             loggedIn: req.session.loggedIn,
