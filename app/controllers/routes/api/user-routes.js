@@ -126,7 +126,8 @@ router.get('/posts', auth, async (req, res) => {
     const foundUserPosts = foundUserPostsData.map((post) => post.get({ plain: true }));
     res.json(foundUserPosts);
   } catch (err) {
-    res.status(500).json({ error: err});
+    console.log(err);
+    res.status(500).json(err);
   }
 
 });

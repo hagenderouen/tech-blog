@@ -44,7 +44,7 @@ router.get('/posts', auth, async (req, res) => {
         
     } catch (err) {
         console.log(err);
-        res.status(500).send({ error: err });
+        res.status(500).json(err);
     }
     
 });
